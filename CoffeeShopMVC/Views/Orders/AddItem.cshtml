@@ -12,9 +12,10 @@
 }
 
 <h2>Add Item</h2>
-<form method="post" action="/customers/@Model.Customer.Id/orders/addorder/@Model.Id">
+<form method="post" action="/customers/@Model.Customer.Id/orders/additem/@Model.Id">
     @foreach(var item in Items.Where(i => i.Order == null))
     {
         <button type ="submit" name="itemId" value="@item.Id">@item.Name: @item.PriceInDollars()</button>
     }
 </form>
+<a href="/customers/@Model.Customer.Id/orders/details/@Model.Id">Back</a>

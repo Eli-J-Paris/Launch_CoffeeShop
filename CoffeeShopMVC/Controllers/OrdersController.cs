@@ -30,6 +30,7 @@ namespace CoffeeShopMVC.Controllers
         {
             var customer = _context.Customers.Where(c => c.Id == customerId).Include(c => c.Orders).ThenInclude(o => o.Items).First();
             var order = customer.Orders.Where(o => o.Id == orderId).First();
+            order.Customer = customer;
             return View(order);
         }
 
@@ -85,7 +86,8 @@ namespace CoffeeShopMVC.Controllers
         [Route("/customers/{customerId:int}/orders/additem/{orderId:int}")]
         public IActionResult AddItem(int customerId, int orderId)
         {
-            var order = _context.Orders.Include(o => o.Items).Where(o => o.Id == orderId).First();
+            var order = _context.Orders.Include(o => o.Items).Include(o => o.Customer).Where(o => o.Id == orderId).First();
+            
             var items = _context.Items.Include(i => i.Order).ToList();
 
             ViewData["allitems"] = items;

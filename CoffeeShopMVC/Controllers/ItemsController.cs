@@ -15,7 +15,7 @@ namespace CoffeeShopMVC.Controllers
 
         public IActionResult Index()
         {
-            var items = _context.Items.ToList();
+            var items = _context.Items.Include(i => i.Order).Where(i => i.Order == null).ToList();
             return View(items);
         }
 
